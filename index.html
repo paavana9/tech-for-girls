@@ -57,26 +57,26 @@
     <form id="registrationForm">
       <div class="form-group">
         <label for="name">Full Name</label>
-        <input class="form-control" type="text" id="name" name="name" required />
+        <input class="form-control" type="text" id="name" required />
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input class="form-control" type="email" id="email" name="email" required />
+        <input class="form-control" type="email" id="email" required />
       </div>
       <div class="form-group">
         <label for="phone">Phone</label>
-        <input class="form-control" type="text" id="phone" name="phone" required />
+        <input class="form-control" type="text" id="phone" required />
       </div>
       <div class="form-group">
         <label for="skills">Skills / Interests</label>
-        <textarea class="form-control" id="skills" name="skills" rows="3" required></textarea>
+        <textarea class="form-control" id="skills" rows="3" required></textarea>
       </div>
       <div class="form-group">
         <label for="screenshot">Upload Screenshot</label>
-        <input class="form-control" type="file" id="screenshot" name="media" required />
+        <input class="form-control" type="file" id="screenshot" required />
       </div>
       <button type="button" class="btn btn-success btn-block mt-3" id="whatsappShareBtn">
-       Share 💖 for Girls
+        Share 💖 for Girls
       </button>
       <div id="shareInfo" class="share-info">✅ Shared! Please continue.</div>
       <button type="submit" class="btn btn-purple btn-block mt-3" disabled id="submitBtn">
@@ -98,12 +98,10 @@
       const shareUrl = `https://api.whatsapp.com/send?text=${msg}`;
       window.open(shareUrl, "_blank");
 
-      // Update UI after sharing
       shared = true;
       shareInfo.style.display = "block";
       submitBtn.disabled = false;
 
-      // Disable button and style it gray
       whatsappShareBtn.innerText = "✅ Shared 💖 for Girls";
       whatsappShareBtn.disabled = true;
       whatsappShareBtn.classList.remove("btn-success");
