@@ -94,12 +94,11 @@
     let shared = false;
 
     whatsappShareBtn.addEventListener("click", () => {
-    const msg = encodeURIComponent("Hey! Join the Tech for Girls Community 💜: https://paavana9.github.io/tech-for-girls/");
-    const encodedMessage = encodeURIComponent(message);
-    const shareUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-    window.open(shareUrl, "_blank");
+   const msg = encodeURIComponent("Hey! Join the Tech for Girls Community 💜: https://paavana9.github.io/tech-for-girls/");
+   const shareUrl = `https://api.whatsapp.com/send?text=${msg}`;
+      window.open(shareUrl, "_blank");
 
-    // Update UI after sharing
+      // Update UI after sharing
     shared = true;
     shareInfo.style.display = "block";
     submitBtn.disabled = false;
