@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tech For Girls Community</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #8000ff, #7a40ff);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #8000ff;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #8000ff;
+    }
+
+    .btn-purple {
+      background-color: #4b0082;
+      color: white;
+      font-weight: bold;
+      border-radius: 30px;
+    }
+
+    .btn-purple:hover {
+      background-color: #3a006a;
+    }
+
+    .share-info {
+      font-size: 14px;
+      margin-top: 10px;
+      color: rgb(0, 128, 0);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Join Tech for Girls Community</h2>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input class="form-control" type="text" id="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" type="email" id="email" required />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input class="form-control" type="text" id="phone" required />
+      </div>
+      <div class="form-group">
+        <label for="skills">Skills / Interests</label>
+        <textarea class="form-control" id="skills" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="screenshot">Upload Screenshot</label>
+        <input class="form-control" type="file" id="screenshot" required />
+      </div>
+      <button type="button" class="btn btn-success btn-block mt-3" id="whatsappShareBtn">
+       Share 💖 for Girls
+      </button>
+      <div id="shareInfo" class="share-info">✅ Shared! Please continue.</div>
+      <button type="submit" class="btn btn-purple btn-block mt-3" disabled id="submitBtn">
+        Register
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("registrationForm");
+    const whatsappShareBtn = document.getElementById("whatsappShareBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const shareInfo = document.getElementById("shareInfo");
+
+    let shared = false;
+
+    whatsappShareBtn.addEventListener("click", () => {
+    const message = `Hey! Join the Tech for Girls Community 💜: https://your-registration-link.com`;
+    const encodedMessage = encodeURIComponent(message);
+    const shareUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+    window.open(shareUrl, "_blank");
+
+    // Update UI after sharing
+    shared = true;
+    shareInfo.style.display = "block";
+    submitBtn.disabled = false;
+
+    // Disable button and style it gray
+    whatsappShareBtn.innerText = "✅ Shared 💖 for Girls";
+    whatsappShareBtn.disabled = true;
+    whatsappShareBtn.classList.remove("btn-success");
+    whatsappShareBtn.classList.add("btn-secondary");
+    });
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzsTtyfp8v5cwBGCApRnMzVfiKfptQCSuUMRngaOnASYUK_wtBcyJx1sXBfSS5j4cUbww/exec"; // Replace with yours
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!shared) return;
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const skills = document.getElementById("skills").value;
+      const file = document.getElementById("screenshot").files[0];
+
+      if (!file || file.size > 2 * 1024 * 1024) {
+        alert("Please upload a file smaller than 2MB.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async function () {
+        const base64File = reader.result.split(",")[1];
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("skills", skills);
+        formData.append("media", base64File);
+
+        submitBtn.innerText = "Submitting...";
+        submitBtn.disabled = true;
+
+        try {
+          const res = await fetch(scriptURL, {
+            method: "POST",
+            body: formData,
+          });
+          alert("Registration successful!");
+          form.reset();
+          shareInfo.style.display = "none";
+          shared = false;
+        } catch (err) {
+          alert("Something went wrong.");
+        } finally {
+          submitBtn.innerText = "Register";
+          submitBtn.disabled = false;
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
