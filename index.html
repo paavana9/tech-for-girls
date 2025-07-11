@@ -57,23 +57,23 @@
     <form id="registrationForm">
       <div class="form-group">
         <label for="name">Full Name</label>
-        <input class="form-control" type="text" id="name" required />
+        <input class="form-control" type="text" id="name" name="name" required />
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input class="form-control" type="email" id="email" required />
+        <input class="form-control" type="email" id="email" name="email" required />
       </div>
       <div class="form-group">
         <label for="phone">Phone</label>
-        <input class="form-control" type="text" id="phone" required />
+        <input class="form-control" type="text" id="phone" name="phone" required />
       </div>
       <div class="form-group">
         <label for="skills">Skills / Interests</label>
-        <textarea class="form-control" id="skills" rows="3" required></textarea>
+        <textarea class="form-control" id="skills" name="skills" rows="3" required></textarea>
       </div>
       <div class="form-group">
         <label for="screenshot">Upload Screenshot</label>
-        <input class="form-control" type="file" id="screenshot" required />
+        <input class="form-control" type="file" id="screenshot" name="media" required />
       </div>
       <button type="button" class="btn btn-success btn-block mt-3" id="whatsappShareBtn">
        Share 💖 for Girls
@@ -94,22 +94,23 @@
     let shared = false;
 
     whatsappShareBtn.addEventListener("click", () => {
-   const msg = encodeURIComponent("Hey! Join the Tech for Girls Community 💜: https://paavana9.github.io/tech-for-girls/");
-   const shareUrl = `https://api.whatsapp.com/send?text=${msg}`;
+      const msg = encodeURIComponent("Hey! Join the Tech for Girls Community 💜: https://paavana9.github.io/tech-for-girls/");
+      const shareUrl = `https://api.whatsapp.com/send?text=${msg}`;
       window.open(shareUrl, "_blank");
 
       // Update UI after sharing
-    shared = true;
-    shareInfo.style.display = "block";
-    submitBtn.disabled = false;
+      shared = true;
+      shareInfo.style.display = "block";
+      submitBtn.disabled = false;
 
-    // Disable button and style it gray
-    whatsappShareBtn.innerText = "✅ Shared 💖 for Girls";
-    whatsappShareBtn.disabled = true;
-    whatsappShareBtn.classList.remove("btn-success");
-    whatsappShareBtn.classList.add("btn-secondary");
+      // Disable button and style it gray
+      whatsappShareBtn.innerText = "✅ Shared 💖 for Girls";
+      whatsappShareBtn.disabled = true;
+      whatsappShareBtn.classList.remove("btn-success");
+      whatsappShareBtn.classList.add("btn-secondary");
     });
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzsTtyfp8v5cwBGCApRnMzVfiKfptQCSuUMRngaOnASYUK_wtBcyJx1sXBfSS5j4cUbww/exec"; // Replace with yours
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzsTtyfp8v5cwBGCApRnMzVfiKfptQCSuUMRngaOnASYUK_wtBcyJx1sXBfSS5j4cUbww/exec";
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
